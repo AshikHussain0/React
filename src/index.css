@@ -1,0 +1,120 @@
+/* Style for employee list page */
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0;
+  font-family: sans-serif;
+}
+
+/* Style for employee list header button */
+.header button {
+  font-size: 16px;
+  height: 50px;
+  margin-top: 10px;
+}
+
+/* Style for employee list table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* common style for button in employee list*/
+button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: none;
+  border: 1px solid #ccc;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+thead {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+}
+
+.table-container {
+  overflow-x: auto;
+  font-family: sans-serif;
+}
+
+/* Style for add and edit employee page */
+.form-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+  font-family: sans-serif;
+}
+
+.form-container .form-group {
+  margin-bottom: 10px;
+
+}
+
+/* Style for input fields */
+.form-container input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 5px 0;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Style for date field */
+.form-container .date {
+  width: 400px;
+  padding: 10px;
+  margin: 5px 0 5px 0;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Style for validation error */
+.error {
+  color: red;
+  font-size: 0.9em;
+  margin-bottom: 10px;
+}
+
+/* common style for button in form container*/
+.form-container button {
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  height: 50px;
+}
+
+.form-container button:hover {
+  background-color: #0056b3;
+}
+
+.form-container button:last-child {
+  margin-bottom: 0;
+}
