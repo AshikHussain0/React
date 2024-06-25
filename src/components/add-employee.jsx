@@ -1,18 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { addEmployee } from "../store/employees-slice";
-import { useNavigate } from "react-router-dom";
+import { addEmployee, editEmployee } from "../store/employees-slice";
+import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const AddEmployee = () => {
   const [name, setName] = useState("");
   const [birthDate, setBirthDate] = useState(null);
-  const [department, setDepatment] = useState("");
+  const [department, setDepartment] = useState("");
   const [experience, setExperience] = useState("");
+  const { id } = useParams();
   const [errors, setErrors] = useState({}); // State for tracking validation errors
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const existingEmployee = useSelector((state) =>
+    state.employees.find((employee) => employee.id === parseInt(id))
+  );
+  useEffect(() => {
+    if (existingEmployee) {
+      setName(existingEmployee.name);
+      setBirthDate(parseDate(existingEmployee.birthDate));
+      setDepartment(existingEmployee.department);
+      setExperience(existingEmployee.experience);
+    }
+  }, [existingEmployee]);
+  // Function to parse string into date object
+  const parseDate = (dateString) => {
+    const [day, month, year] = dateString.split("-");
+    return new Date(year, month - 1, day);
+  };
 
   // Function to parse date into string format.
   const formatDate = (date) => {
@@ -40,18 +58,33 @@ const AddEmployee = () => {
     const formattedBirthDate = formatDate(birthDate);
     setErrors({});
     if (name && birthDate && department && experience) {
-      dispatch(
-        addEmployee({
-          id: Date.now(),
-          name,
-          birthDate: formattedBirthDate,
-          department,
-          experience,
-        })
-      );
+      if (existingEmployee) {
+        dispatch(
+          editEmployee({
+            id: existingEmployee.id,
+            name,
+            birthDate: formattedBirthDate,
+            department,
+            experience,
+          })
+        );
+        alert("Employee updated successfully!");
+      } else {
+        dispatch(
+          addEmployee({
+            id: Date.now(),
+            name,
+            birthDate: formattedBirthDate,
+            department,
+            experience,
+          })
+        );
+        alert("Employee added successfully!");
+      }
+
       setName("");
       setBirthDate(null);
-      setDepatment("");
+      setDepartment("");
       setExperience("");
       navigate("/list");
     }
@@ -75,7 +108,7 @@ const AddEmployee = () => {
 
   return (
     <div className="form-container">
-      <h2>Add Employee</h2>
+      {existingEmployee ? <h2> Edit Employee </h2> : <h2> Add Employee </h2>}
       <form>
         {/* Field for name input */}
         <div className="form-group">
@@ -111,7 +144,7 @@ const AddEmployee = () => {
             type="text"
             placeholder="Department"
             value={department}
-            onChange={(e) => setDepatment(e.target.value)}
+            onChange={(e) => setDepartment(e.target.value)}
           />
           {errors.department && (
             <span className="error">{errors.department}</span>
@@ -130,7 +163,9 @@ const AddEmployee = () => {
             <span className="error">{errors.experience}</span>
           )}
         </div>
-        <button onClick={handleAddEmployee}>Add Employee</button>
+        <button onClick={handleAddEmployee}>
+          {existingEmployee ? "Update Employee" : "Add Employee"}
+        </button>
         <button onClick={() => navigate("/list")}>Back to List</button>
       </form>
     </div>

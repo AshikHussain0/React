@@ -21,6 +21,7 @@ const EmployeeList = () => {
   const handleDelete = () => {
     dispatch(deleteEmployee(itemIdToDelete))
     setShowModal(false); // Close modal after delete
+    alert("Employee deleted successfully!");
   };
   
   return (

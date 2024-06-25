@@ -1,10 +1,9 @@
-import { configureStore } from '@reduxjs/toolkit';
-import employeesReducer from './employees-slice';
+import { combineReducers } from 'redux';
+import employeesReducer from './employees-slice'; // example slice
 
-const store = configureStore({
-  reducer: {
-    employees: employeesReducer,
-  },
+const rootReducer = combineReducers({
+  employees: employeesReducer,
+  // add other slices here
 });
 
-export default store;
+export default rootReducer;
